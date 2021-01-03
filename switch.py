@@ -195,7 +195,7 @@ class Switch:
             card = self.stock.pop()
             # and add to hand
             player.hand.append(card)
-        return i
+            return i
 
     def discard_card(self, player, card):
         """Discard card and apply its game effects.
@@ -282,4 +282,5 @@ class Switch:
 
 
 if __name__ == '__main__':
-    Switch().run_game
+    game = Switch()
+    game.run_game()

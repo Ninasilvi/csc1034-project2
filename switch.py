@@ -16,8 +16,8 @@ class Switch:
 
     To run the game, create a Switch object and call its run_game method:
 
-    >>> game = Switch()
-    >>> game.run_game()
+    game = Switch()
+    game.run_game()
 
     Switch objects have the following attributes, which are initialized
     by Switch_setup_round:
@@ -49,7 +49,7 @@ class Switch:
             if choice == 1:
                 # set up self.players before round starts
                 player_info = UI.get_player_information(MAX_PLAYERS)
-                self.players = [player_classes(name) for name, typ in player_info]
+                self.players = [player_classes[typ](name) for typ, name in player_info]
                 self.run_round()
             else:
                 break
@@ -65,7 +65,7 @@ class Switch:
         # deal cards etc.
         self.setup_round()
 
-        i = 0 # current player index
+        i = 0  # current player index
         while True:
             # process current player's turn
             won = self.run_player(self.players[i])

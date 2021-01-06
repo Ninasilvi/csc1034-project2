@@ -76,7 +76,7 @@ class Switch:
                 i = (i+self.direction) % len(self.players)
             else:
                 continue
-        UI.print_winner_of_game(self.players[1])
+        UI.print_winner_of_game(self.players[i])
 
     def setup_round(self):
         """Initialize a round of switch.

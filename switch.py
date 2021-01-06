@@ -94,7 +94,7 @@ class Switch:
         for player in self.players:
             self.pick_up_card(player, HAND_SIZE)
         # set game flags to initial value
-        self.direction == 1
+        self.direction = 1
         self.skip = False
         self.draw2 = False
         self.draw4 = True
@@ -156,7 +156,7 @@ class Switch:
         """Return whether card can be discarded onto discard pile."""
         # queens and aces can always be discarded
         if card.value in 'QA':
-            return False
+            return True
         # otherwise either suit or value has to match with top card
         top_card = self.discards[-1]
         return card.suit == top_card.suit or card.value == top_card.value

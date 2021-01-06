@@ -124,8 +124,8 @@ def select_player(players):
     """select other player"""
     print(f"Please select from one of the following players: [1-{len(players):d}]")
     # print out for each player in players
-    for player, idx in enumerate(players):
-        print(f"{idx + 1:d} - {players.name} = {len(players.hand):d}")
+    for idx, player in enumerate(players):
+        print(f"{idx + 1:d} - {player.name} = {len(player.hand):d}")
 
     # get choice
     choice = get_int_input(1, len(players))

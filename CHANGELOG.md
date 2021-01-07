@@ -1,4 +1,6 @@
 # CHANGELOG 
+* v1.1.6 [2021-01-07]: Fixed the `run_round` method in `switch.py`.  
+    The game now progresses to the next player.
 * v1.1.6 [2021-01-06]: Changed `self.players[1]` to `self.players[i]` in `switch.py` line 79.  
     UI now displays the correct winner.
 * v1.1.5 [2021-01-06]: 

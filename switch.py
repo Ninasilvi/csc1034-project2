@@ -59,24 +59,31 @@ class Switch:
         """Runs a single round of switch.
 
         Continuously calls Switch.run_player for the current player,
-        and advances the current player depending on current direction
-        of play.
+        and advances the current player depending on the current game direction.
         """
-        # deal cards etc.
+        # Deal cards and set up game round.
         self.setup_round()
 
-        i = 0  # current player index
+        # Current player index.
+        i = 0
         while True:
-            # process current player's turn
-            won = self.run_player(self.players[i])
+            # Run current player's turn.
+            self.run_player(self.players[i])
+            # Check if the player's hand is empty
+            won = not self.players[i].hand
+            # If the player's hand is empty, they won and the game ends.
             if won:
+                UI.print_winner_of_game(self.players[i])
                 break
-            elif won:
-                # advance player index depending on self.direction
-                i = (i+self.direction) % len(self.players)
+            # If the player didn't win, the game progresses to the next player
             else:
+                # If it's the last player in self.players and self.direction == 1, current player's index is reset to 0.
+                if i == len(self.players) - 1 and self.direction == 1:
+                    i = 0
+                # Otherwise current player's index changes based on the game's direction.
+                else:
+                    i = i + self.direction
                 continue
-        UI.print_winner_of_game(self.players[i])
 
     def setup_round(self):
         """Initialize a round of switch.
@@ -108,7 +115,10 @@ class Switch:
         Returns:
         True if no-one has won within his turn, otherwise False.
 
-        In each turn, game effects are applied according to the outcome of the last turn. The player is then asked to select a card via a call to Player.select_card which is then discarded via a call to discard_card. If the player has no discardable card (or chooses voluntarily not to discard), draw_and_discard is called to draw from stock.
+        In each turn, game effects are applied according to the outcome of the last turn.
+        The player is then asked to select a card via a call to Player.select_card which is then discarded
+        via a call to discard_card. If the player has no discardable card (or chooses voluntarily not to discard),
+        draw_and_discard is called to draw from stock.
         """
         # apply any pending penalties (skip, draw2, draw4)
         if self.skip:

@@ -69,13 +69,13 @@ class Switch:
         while True:
             # Run current player's turn.
             self.run_player(self.players[i])
-            # Check if the player's hand is empty
+            # Check if the player's hand is empty.
             won = not self.players[i].hand
             # If the player's hand is empty, they won and the game ends.
             if won:
                 UI.print_winner_of_game(self.players[i])
                 break
-            # If the player didn't win, the game progresses to the next player
+            # If the player didn't win, the game progresses to the next player.
             else:
                 # If it's the last player in self.players and self.direction == 1, current player's index is reset to 0.
                 if i == len(self.players) - 1 and self.direction == 1:
@@ -128,11 +128,13 @@ class Switch:
             self.skip = False
             UI.print_message('{} is skipped.'.format(player.name))
             return False
+
         if self.draw2:
             # draw two cards
             picked = self.pick_up_card(player, 2)
             self.draw2 = False
             UI.print_message('{} draws {} cards.'.format(player.name, picked))
+
         if self.draw4:
             # draw four cards
             picked = self.pick_up_card(player, 4)
@@ -207,8 +209,11 @@ class Switch:
             card = self.stock.pop()
             # Append card to player hand.
             player.hand.append(card)
-            # Continue for the specified amount of times.
-            continue
+            if i == amount:
+                return i
+            else:
+                # Continue for the specified amount of times.
+                continue
 
     def discard_card(self, player, card):
         """Discard card and apply its game effects.
@@ -225,17 +230,20 @@ class Switch:
         # we are done if the player has no more cards in his hand
         if not player.hand:
             return
-        # if card is an eight, skip next player
+        # If card is an eight, skip the next player.
         if card.value == '8':
             self.skip = True
-        # if card is a two, next player needs to draw two
+        # If card is a two, next player needs to draw 2.
         elif card.value == '2':
             self.draw2 = True
-        # if card is a king, game direction reverses
+        # If card is a queen, next player needs to draw 4.
+        elif card.value == 'Q':
+            self.draw4 = True
+        # If card is a king, game direction reverses.
         elif card.value == 'K':
             self.direction *= -1
             UI.print_message("Game direction reversed.")
-        # if card is a jack, ask player with whom to swap hands
+        # If card is a jack, ask player with whom to swap hands.
         elif card.value == 'J':
             others = [p for p in self.players if p is not player]
             choice = player.ask_for_swap(others)

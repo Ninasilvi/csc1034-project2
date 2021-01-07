@@ -1,4 +1,10 @@
 # CHANGELOG 
+* v1.1.8 [2021-01-07]: 
+    * Implemented an if statement that returns i on the last loop iteration in `pick_up_card` method in `switch.py`.  
+    Now the correct card draw message is printed instead of "player draws None cards".
+    * Implemented an effect for Q card in `discard_card` method in `switch.py`.
+    Now if a Queen is discarded, the next player draws 4.
+
 * v1.1.7 [2021-01-07]: 
     * Changed `self.draw4` initial value to `False` in `switch.py` line 107.
     * Added another condition in `run_round` method in `switch.py`.  
@@ -15,12 +21,12 @@
 * v1.1.5 [2021-01-06]: 
     * Changed `self.direction == 1` to `self.direction = 1` in `switch.py` line 97.
     * Changed `return False` to `return True` in `switch.py` line 159.  
-    Q and A cards are now discardable.
+    Queen and Ace cards are now discardable.
     
 * v1.1.4 [2021-01-06]: 
     * Changed `player, idx` to `idx, player` in `user_interface.py` line 127.
     * Changed `players.name` to `player.name` and `players.hand` to `player.hand` in `user_interface.py` line 128.  
-    Now possible to swap hands for J card effect.
+    Now possible to swap hands for Jack card effect.
     
 * v1.1.3 [2021-01-05]: Changed `self.players = [player_classes[typ](name) for typ, name in player_info]` to 
 `self.players = [player_classes[typ](name) for typ, name in player_info]` in  `switch.py` line 52.  

@@ -80,6 +80,8 @@ class Switch:
                 # If it's the last player in self.players and self.direction == 1, current player's index is reset to 0.
                 if i == len(self.players) - 1 and self.direction == 1:
                     i = 0
+                elif i == 0 and self.direction == -1:
+                    i = len(self.players) - 1
                 # Otherwise current player's index changes based on the game's direction.
                 else:
                     i = i + self.direction
@@ -104,7 +106,7 @@ class Switch:
         self.direction = 1
         self.skip = False
         self.draw2 = False
-        self.draw4 = True
+        self.draw4 = False
 
     def run_player(self, player):
         """Process a single player's turn.
@@ -188,24 +190,25 @@ class Switch:
         discard are shuffled back into the stock. If this is still not
         sufficient, the maximum possible number of cards is picked.
         """
-        # repeat n times
+        # Repeat specified amount of times.
         for i in range(1, amount+1):
-            # if no more card in stock pile
+            # If there are no more cards in the stock pile.
             if not self.stock:
-                # add back discarded cards (but not top card)
+                # Add back discarded cards (excluding the top card) to the stock pile.
                 if len(self.discards) == 1:
                     UI.print_message("All cards distributed")
                     return i-1
                 self.stock = self.discards[:-1]
                 del self.discards[:-1]
-                # shuffle stock
+                # Shuffle stock.
                 random.shuffle(self.stock)
                 UI.print_message("Discards are shuffled back.")
-            # draw stock card
+            # Draw stock card.
             card = self.stock.pop()
-            # and add to hand
+            # Append card to player hand.
             player.hand.append(card)
-            return i
+            # Continue for the specified amount of times.
+            continue
 
     def discard_card(self, player, card):
         """Discard card and apply its game effects.

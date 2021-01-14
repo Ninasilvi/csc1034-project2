@@ -89,21 +89,29 @@ def get_player_information(max_players):
         print(f"Please enter the name of player {i+1}:")
         player_info.append(('human', get_string_input()))
 
-    ai_names = ['Angela', 'Bart', 'Charly', 'Dorothy']
-
+    ai_names = ["Angela", "Bart", "Charly", "Dorothy", "John", "Paul", "Ringo", "George"]
     # how many AI players? ensure there are at least 2 players
     min_val = 1 if (len(player_info) == 0) else 0
     max_val = max_players - no_of_players
     print(f"\nHow many ai players [{min_val:d}-{max_val:d}]:")
     no_of_players = get_int_input(min_val, max_val)
 
-    # randomly assign a simple or smart AI for each computer strategy
-    for name in ai_names[:no_of_players]:
-        if [True, False]:
+    # Number for while loop, as a for loop cannot assign random AI names.
+    num = 0
+    # Randomly assign AI players.
+    while num < no_of_players:
+        # Picks a random AI name.
+        name = random.choice(ai_names)
+        # Removes the name from the list to avoid name repetition.
+        ai_names.remove(name)
+        # Randomly assigns simple AI or smart AI strategy.
+        ai_type = random.choice([True, False])
+        if ai_type:
             player_info.append(('simple', name))
         else:
             player_info.append(('smart', f"Smart {name}"))
-
+        # Number for while loop increases by one with each iteration.
+        num += 1
     return player_info
 
 

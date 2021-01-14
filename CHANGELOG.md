@@ -1,8 +1,15 @@
 # CHANGELOG 
+* v1.1.8 [2021-01-14]: 
+    * Changed the for loop into a while loop in `get_player_information` method in `user_interface.py`.
+    * Randomized the selection of simple or smart AI.
+    * Randomized the selection of AI names.
+    * Added new AI names.  
+    Now AI names and types are randomized.
+    
 * v1.1.8 [2021-01-07]: 
     * Implemented an if statement that returns i on the last loop iteration in `pick_up_card` method in `switch.py`.  
     Now the correct card draw message is printed instead of "player draws None cards".
-    * Implemented an effect for Q card in `discard_card` method in `switch.py`.
+    * Implemented an effect for Q card in `discard_card` method in `switch.py`.  
     Now if a Queen is discarded, the next player draws 4.
 
 * v1.1.7 [2021-01-07]: 

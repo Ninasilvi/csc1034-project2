@@ -1,5 +1,10 @@
 # CHANGELOG 
-* v1.1.8 [2021-01-14]: 
+* v1.1.10 [2021-01-15]:
+    * Changed `return random.choice` to `return random.choice(choices)` in `players.py` line 50.
+    * Fixed the bug that creates a `SmartAI` object for `simple` type AI and vice versa.  
+    Now AI players work properly.
+      
+* v1.1.9 [2021-01-14]: 
     * Changed the for loop into a while loop in `get_player_information` method in `user_interface.py`.
     * Randomized the selection of simple or smart AI.
     * Randomized the selection of AI names.

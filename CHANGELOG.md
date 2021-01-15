@@ -1,4 +1,9 @@
 # CHANGELOG 
+* v1.1.11 [2021-01-15]:
+    * Fixed `test_can_discard__allows_queen` test in `test_switch.py`.
+    * Fixed the bug that generates 56 cards in a starting deck.  
+    Now all `test_switch.py` tests pass and the correct number of cards are generated in a starting deck.
+
 * v1.1.10 [2021-01-15]:
     * Changed `return random.choice` to `return random.choice(choices)` in `players.py` line 50.
     * Fixed the bug that creates a `SmartAI` object for `simple` type AI and vice versa.  

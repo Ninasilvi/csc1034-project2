@@ -1,26 +1,26 @@
-"""command line interfacce for the switch game"""
+"""Command line interface for the switch game."""
 import random
 
 
 def print_message(msg):
-    """print a generic message"""
+    """Print out a message to UI."""
     print(msg)
 
 
 def say_welcome():
-    """print welcome information"""
-    print_message("Welcome to Switch v1.1.11")
+    """Print a welcome message."""
+    print_message("Welcome to Switch v1.2.0")
 
 
 def print_game_menu():
-    """display game menu"""
+    """Display game menu."""
     print("\nPlease select from one of the following options: [1-2]")
     print("1 - New Game")
     print("2 - Exit")
 
 
 def print_player_info(player, top_card, hands):
-    """display player information and public game state"""
+    """Display player information and public game state."""
     print(f"\nHANDS: {hands}")
     print(f"PLAYER: {player.name}")
     if not player.is_ai:
@@ -29,7 +29,7 @@ def print_player_info(player, top_card, hands):
 
 
 def print_discard_result(discarded, card):
-    """display a discard message"""
+    """Display a discard message."""
     if discarded:
         print(f"Discarded: {card}\n")
     else:
@@ -37,19 +37,19 @@ def print_discard_result(discarded, card):
 
 
 def print_winner_of_game(player):
-    """display winner information"""
+    """Display winner information."""
     print_message('\n'+80*'-')
     print_message(f"Woohoo!!! Winner of the game is: {player.name}")
     print_message(80*'-')
 
 
 def say_goodbye():
-    """say goodbye to my little friend"""
+    """Say goodbye to my little friend."""
     print_message("Goodbye!")
 
 
 def convert_to_int(string):
-    """converts string to int"""
+    """Converts string to int."""
     result = -1
     try:
         result = int(string)
@@ -59,7 +59,7 @@ def convert_to_int(string):
 
 
 def get_int_input(min_val, max_val):
-    """get int value from user"""
+    """Get int input from the user."""
     choice = -1
     while choice < min_val or choice > max_val:
         print("> ", end="")
@@ -70,39 +70,37 @@ def get_int_input(min_val, max_val):
 
 
 def get_string_input():
-    """get word from user"""
+    """Get string input from the user."""
     print("> ", end="")
     return input()
 
 
 def get_player_information(max_players):
-    """get required information to set up a round"""
-
-    # create players list
+    """Get required information to set up a round."""
+    # Create a player info list.
     player_info = []
-    # how many human players?
+    # Get input of the number of human players.
     print("\nHow many human players [1-4]:")
     no_of_players = get_int_input(1, max_players)
 
-    # for each player, get name
+    # Get the names of each human player.
     for i in range(no_of_players):
         print(f"Please enter the name of player {i+1}:")
         player_info.append(('human', get_string_input()))
 
     ai_names = ["Angela", "Bart", "Charly", "Dorothy", "John", "Paul", "Ringo", "George"]
-    # how many AI players? ensure there are at least 2 players
-    min_val = 1 if (len(player_info) == 0) else 0
+    # Determine minimum and maximum values of AI players. Ensures there's at least 2 players.
+    min_val = 1 if (len(player_info) <= 1) else 0
     max_val = max_players - no_of_players
     print(f"\nHow many ai players [{min_val:d}-{max_val:d}]:")
     no_of_players = get_int_input(min_val, max_val)
 
-    # Number for while loop, as a for loop cannot assign random AI names.
+    # Starting umber for while loop.
     num = 0
     # Randomly assign AI players.
     while num < no_of_players:
-        # Picks a random AI name.
+        # Picks a random AI name and removes it from the name list to avoid repetition.
         name = random.choice(ai_names)
-        # Removes the name from the list to avoid name repetition.
         ai_names.remove(name)
         # Randomly assigns simple AI or smart AI strategy.
         ai_type = random.choice([True, False])
@@ -116,26 +114,24 @@ def get_player_information(max_players):
 
 
 def select_card(cards):
-    """select card from hand"""
+    """Selects a card from a hand."""
     print(f"Please select from one of the following cards: [1-{len(cards):d}]")
     for i in range(len(cards)):
         card = cards[i]
         print(f"{i+1} - {card}")
 
-    # get choice
+    # Get a card choice and return the card.
     choice = get_int_input(1, len(cards))
-    # get card
     return cards[choice-1] if choice else None
 
 
 def select_player(players):
-    """select other player"""
+    """Select another player."""
     print(f"Please select from one of the following players: [1-{len(players):d}]")
-    # print out for each player in players
+    # Print out a list of all other players.
     for idx, player in enumerate(players):
         print(f"{idx + 1:d} - {player.name} = {len(player.hand):d}")
 
-    # get choice
+    # Get a player choice and return the player.
     choice = get_int_input(1, len(players))
-    # get player
     return players[choice - 1]

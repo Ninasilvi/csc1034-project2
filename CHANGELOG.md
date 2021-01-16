@@ -1,4 +1,7 @@
 # CHANGELOG 
+* v1.2.0 [2021-01-16]: Fixed the bug that allows one human player to play against themselves.  
+    Now the game is fully functional.
+    
 * v1.1.11 [2021-01-15]:
     * Fixed `test_can_discard__allows_queen` test in `test_switch.py`.
     * Fixed the bug that generates 56 cards in a starting deck.  

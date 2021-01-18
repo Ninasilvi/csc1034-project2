@@ -1,13 +1,10 @@
-"""Players for the switch game"""
+"""Players for the switch game."""
 import random
 import user_interface as UI
 
 
 class Player:
-    """Interface for a human player
-
-    select_card and ask_for_swap are delegated to the user_interface
-    """
+    """Player class for a human player."""
     is_ai = False
 
     def __init__(self, name):
@@ -16,7 +13,7 @@ class Player:
 
     @staticmethod
     def select_card(choices, _):
-        """Select a card to be discarded
+        """Select a card to be discarded.
 
         Delegates choice to user interface.
         """
@@ -24,7 +21,7 @@ class Player:
 
     @staticmethod
     def ask_for_swap(others):
-        """Select a player to switch hands with
+        """Select a player to switch hands with.
 
         Delegates choice to user interface.
         """
@@ -32,9 +29,9 @@ class Player:
 
 
 class SimpleAI:
-    """Simple computer strategy
+    """Simple computer strategy.
 
-    This player just performs random decisions.
+    This AI player performs random decisions.
     """
     is_ai = True
 
@@ -43,14 +40,14 @@ class SimpleAI:
         self.hand = []
 
     def select_card(self, choices, _):
-        """Select a card to be discarded
+        """Select a card to be discarded.
 
-        Randomly chooses one of the choices.
+        Randomly chooses one of the valid choices.
         """
         return random.choice(choices)
 
     def ask_for_swap(self, others):
-        """Select a card to be discarded
+        """Select a player to swap hands with.
 
         Randomly chooses one of the players.
         """
@@ -58,16 +55,16 @@ class SimpleAI:
 
 
 class SmartAI(SimpleAI):
-    """Smarter computer strategy
+    """Smart computer strategy.
 
-    This player makes choices based on observations of the
+    This AI player makes choices based on the
     current game state.
     """
     def select_card(self, choices, hands):
-        """Select a card to be discarded
+        """Select a card to be discarded.
 
         Selects a card that either harms opponents or
-        chooses a suit that the player holds many cards of.
+        chooses a suit that the player holds the most cards of.
         """
         def score(card):
             in_suit = len([c for c in self.hand
@@ -89,9 +86,9 @@ class SmartAI(SimpleAI):
         return candidate if score(candidate) > -2 else None
 
     def ask_for_swap(self, others):
-        """Select a card to be discarded
+        """Select a player to swap hands with.
 
-        Switch with the player who holds the least cards.
+        Switch hands with the player who holds the least cards.
         """
         smallest = min(len(p.hand) for p in others)
         best = [p for p in others if len(p.hand) == smallest]

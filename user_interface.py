@@ -49,7 +49,7 @@ def say_goodbye():
 
 
 def convert_to_int(string):
-    """Converts string to int."""
+    """Convert string to int."""
     result = -1
     try:
         result = int(string)
@@ -114,7 +114,7 @@ def get_player_information(max_players):
 
 
 def select_card(cards):
-    """Selects a card from a hand."""
+    """Select a card from a hand."""
     print(f"Please select from one of the following cards: [1-{len(cards):d}]")
     for i in range(len(cards)):
         card = cards[i]

@@ -1,4 +1,4 @@
-"""Test suit for the switch game"""
+"""Test suite for the switch game."""
 from copy import deepcopy
 import switch
 
@@ -6,7 +6,7 @@ from cards import Card
 
 
 class MockPlayer:
-    """Mock player which deterministic behaviour"""
+    """Mock player with deterministic behaviour."""
     is_ai = True
 
     def __init__(self, hand):
@@ -15,23 +15,23 @@ class MockPlayer:
 
     @staticmethod
     def select_card(choices, _):
-        """Select a card to be discarded
+        """Select a card to be discarded.
 
-        Returns cards in hand one after the other
+        Returns cards in hand one after the other.
         """
         return choices[0]
 
     @staticmethod
     def ask_for_swap(others):
-        """Select a player to switch hands with
+        """Select a player to swap hands with.
 
-        Selects first player
+        Selects the first player.
         """
         return others[0]
 
 
 def mock_setup_round(hands, stock, discards, **flags):
-    """Set up a specific game state"""
+    """Set up a specific game state."""
     def str_to_cards(spec):
         return [Card(sv[:1], sv[1:]) for sv in spec.split()]
 
@@ -45,7 +45,7 @@ def mock_setup_round(hands, stock, discards, **flags):
 
 
 def test_setup_round__resets_flags():
-    """setup_round sets all flags to initial value"""
+    """Test if setup_round sets all flags to initial values."""
     game = switch.Switch()
     game.players = [MockPlayer([]), MockPlayer([])]
     game.setup_round()
@@ -56,7 +56,7 @@ def test_setup_round__resets_flags():
 
 
 def test_setup_round__deals_cards():
-    """setup_round deals correct number of cards"""
+    """Test if setup_round deals a correct number of cards."""
     game = switch.Switch()
     game.players = [MockPlayer([]), MockPlayer([])]
     game.setup_round()
@@ -66,7 +66,7 @@ def test_setup_round__deals_cards():
 
 
 def test_pick_up_card__pick_correct_number():
-    """pick_up_card picks up correct number of cards"""
+    """Test if pick_up_card picks up a correct number of cards."""
     game = mock_setup_round(['♣4', '♣9'], '♠7 ♢8 ♠5 ♢6 ♢7', '♠5 ♢6 ♡3')
     player = game.players[0]
     picked = game.pick_up_card(player, 4)
@@ -81,7 +81,7 @@ def test_pick_up_card__pick_correct_number():
 
 
 def test_can_discard__follows_suit():
-    """all cards of the same suit can be discarded"""
+    """Test if all cards with the same suit can be discarded."""
     game = mock_setup_round([], '', '♣5')
     assert game.can_discard(Card('♣', '2'))
     assert game.can_discard(Card('♣', '3'))
@@ -96,7 +96,7 @@ def test_can_discard__follows_suit():
 
 
 def test_can_discard__follows_value():
-    """all cards of the same value can be discarded"""
+    """Test if all cards with the same value can be discarded."""
     game = mock_setup_round([], '', '♣5')
     assert game.can_discard(Card('♢', '5'))
     assert game.can_discard(Card('♡', '5'))
@@ -104,28 +104,28 @@ def test_can_discard__follows_value():
 
 
 def test_discard_card__sets_draw2():
-    """discarding a two sets the draw2 flag"""
+    """Test if discarding a 2 sets the draw2 flag."""
     game = mock_setup_round(['♣4 ♡2', '♣9'], '♢5 ♢6 ♢7 ♢8', '♡3')
     game.discard_card(game.players[0], Card('♡', '2'))
     assert game.draw2
 
 
 def test_discard_card__sets_draw4():
-    """discarding a queen sets the draw4 flag"""
+    """Test if discarding a Q sets the draw4 flag."""
     game = mock_setup_round(['♣4 ♡Q', '♣9'], '♢5 ♢6 ♢7 ♢8', '♡3')
     game.discard_card(game.players[0], Card('♡', 'Q'))
     assert game.draw4
 
 
 def test_discard_card__sets_skip():
-    """discarding an eight sets the skip flag"""
+    """Test if discarding an 8 sets the skip flag."""
     game = mock_setup_round(['♣4 ♡8', '♣9'], '♢5 ♢6 ♢7 ♢8', '♡3')
     game.discard_card(game.players[0], Card('♡', '8'))
     assert game.skip
 
 
 def test_discard_card__reverses():
-    """discarding a king reverses direction"""
+    """Test if discarding a K reverses direction."""
     game = mock_setup_round(['♣4 ♡K', '♣K ♣9'], '♢5 ♢6 ♢7 ♢8', '♡3')
     game.discard_card(game.players[0], Card('♡', 'K'))
     assert game.direction == -1
@@ -134,7 +134,7 @@ def test_discard_card__reverses():
 
 
 def test_discard_card__swaps():
-    """discarding a jack swaps hands"""
+    """Test if discarding a J swaps hands."""
     game = mock_setup_round(['♣4 ♡J', '♣K ♣9'], '♢5 ♢6 ♢7 ♢8', '♡3')
     game.discard_card(game.players[0], Card('♡', 'J'))
     assert game.players[0].hand == [Card('♣', 'K'), Card('♣', '9')]
@@ -142,7 +142,7 @@ def test_discard_card__swaps():
 
 
 def test_can_discard__allows_ace():
-    """aces can always be discarded"""
+    """Test if A can always be discarded."""
     game = mock_setup_round([], '', '♣5')
     assert game.can_discard(Card('♢', 'A'))
     assert game.can_discard(Card('♡', 'A'))
@@ -150,7 +150,7 @@ def test_can_discard__allows_ace():
 
 
 def test_can_discard__allows_queen():
-    """queens can always be discarded"""
+    """Test if Q can always be discarded."""
     game = mock_setup_round([], '', '♣5')
     assert game.can_discard(Card('♢', 'Q'))
     assert game.can_discard(Card('♡', 'Q'))
@@ -158,7 +158,7 @@ def test_can_discard__allows_queen():
 
 
 def test_get_normalized_hand_sizes():
-    """test hand size normalization"""
+    """Test hand size normalization."""
     game = mock_setup_round(['♣4', '♣K ♣9', '♡J ♢5 ♢6'], '♢7 ♢8', '♡3')
     assert game.get_normalized_hand_sizes(game.players[0]) == [1, 2, 3]
     assert game.get_normalized_hand_sizes(game.players[1]) == [2, 3, 1]
@@ -171,7 +171,7 @@ def test_get_normalized_hand_sizes():
 
 
 def test_swap_hands():
-    """Test swapping of hands"""
+    """Test hand swapping."""
     game = mock_setup_round(['♣4', '♣K ♣9', '♡J ♢5 ♢6'], '♢7 ♢8', '♡3')
     game.swap_hands(game.players[1], game.players[2])
     assert len(game.players[1].hand) == 3
@@ -179,7 +179,7 @@ def test_swap_hands():
 
 
 def test_run_player__returns_true_upon_win():
-    """run_player returns True if player wins"""
+    """Test if run_player returns True if player wins."""
     game = mock_setup_round(['♣4 ♣5', '♣9', '♣10'], '♣6 ♣7 ♣8', '♣3')
     player = game.players[0]
     assert not game.run_player(player)
@@ -187,7 +187,7 @@ def test_run_player__returns_true_upon_win():
 
 
 def test_run_player__draws_card():
-    """run_player forces pick up if no discard possible"""
+    """Test if run_player forces to pick up a card if no discard is possible."""
     game = mock_setup_round(['♣4', '♣9'], '♢5 ♢6 ♢7 ♢8', '♡3')
     player = game.players[0]
     game.run_player(player)
@@ -197,7 +197,7 @@ def test_run_player__draws_card():
 
 
 def test_run_player__draws_card_and_discards():
-    """run_player discards drawn card if possible"""
+    """Test if run_player discards drawn card if possible."""
     game = mock_setup_round(['♣4', '♣9'], '♢5 ♢6 ♢7 ♡8', '♡3')
     player = game.players[0]
     game.run_player(player)
@@ -207,7 +207,7 @@ def test_run_player__draws_card_and_discards():
 
 
 def test_run_player__adheres_to_draw2_flag():
-    """run_player adheres to switch.draw2"""
+    """Test if run_player adheres to draw2 flag."""
     game = mock_setup_round(['', ''], '♢5 ♣6 ♣7', '♢3', draw2=True)
     player = game.players[1]
     game.run_player(player)
@@ -216,7 +216,7 @@ def test_run_player__adheres_to_draw2_flag():
 
 
 def test_run_player__adheres_to_draw4_flag():
-    """run_player adheres to switch.draw4"""
+    """Test if run_player adheres to draw4 flag."""
     game = mock_setup_round(['', ''], '♢5 ♣5 ♣6 ♣7 ♣8', '♢3', draw4=True)
     player = game.players[1]
     game.run_player(player)
@@ -225,7 +225,7 @@ def test_run_player__adheres_to_draw4_flag():
 
 
 def test_run_player__adheres_to_skip_flag():
-    """run_player adheres to switch.skip"""
+    """Test if run_player adheres to skip flag."""
     game = mock_setup_round(['', '', ''], '', '♣3', skip=True)
     player = game.players[1]
     hand_before = deepcopy(player.hand)

@@ -1,11 +1,11 @@
-"""Card object for the switch game"""
+"""Cards for the switch game."""
 from collections import namedtuple
 
 
 class Card(namedtuple('CardData', ['suit', 'value'])):
-    """A switch card
+    """A switch card.
 
-    A Card is a namedtuple with the fields 'suit' and 'value'.
+    A Card object is a namedtuple with the fields 'suit' and 'value'.
     """
     suits = '♣ ♢ ♡ ♠'.split()
     values = '2 3 4 5 6 7 8 9 10 J Q K A'.split()

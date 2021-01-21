@@ -9,7 +9,7 @@ def print_message(msg):
 
 def say_welcome():
     """Print a welcome message."""
-    print_message("Welcome to Switch v1.2.1")
+    print_message("Welcome to Switch v1.2.2")
 
 
 def print_game_menu():
@@ -17,6 +17,13 @@ def print_game_menu():
     print("\nPlease select from one of the following options: [1-2]")
     print("1 - New Game")
     print("2 - Exit")
+
+
+def print_discard_choice():
+    """Display options for the card drawn when nothing was discarded."""
+    print("Please select what you would like to do with this card: [1-2]")
+    print("1 - Discard")
+    print("2 - Add to hand")
 
 
 def print_player_info(player, top_card, hands):
@@ -85,7 +92,7 @@ def get_player_information(max_players):
 
     # Get the names of each human player.
     for i in range(no_of_players):
-        print(f"Please enter the name of player {i+1}:")
+        print(f"\nPlease enter the name of player {i+1}:")
         player_info.append(('human', get_string_input()))
 
     ai_names = ["Angela", "Bart", "Charly", "Dorothy", "John", "Paul", "Ringo", "George"]

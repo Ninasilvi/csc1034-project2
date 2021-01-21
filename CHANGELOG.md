@@ -1,4 +1,7 @@
 # CHANGELOG 
+* v1.2.2 [2021-01-21]: Implemented an option for the player to choose to add a drawn card to hand
+    instead of discarding it after the player couldn't discard a card or chose not to.
+
 * v1.2.1 [2021-01-21]: Implemented an option for the player not to discard a card voluntarily.
 
 * v1.2.0 [2021-01-16]: Fixed the bug that allows one human player to play against themselves.  

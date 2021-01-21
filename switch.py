@@ -236,7 +236,8 @@ class Switch:
             self.swap_hands(player, choice)
 
     def draw_and_discard(self, player, no_discard=False):
-        """Draw a card from stock and discard it if possible.
+        """Draw a card from stock and ask whether the player wants to
+        discard it if possible.
 
         Parameters:
         player - Player that draws the card.
@@ -249,7 +250,7 @@ class Switch:
         """
         # Print out a message depending on whether the player chose not to discard or had no discardable cards.
         if no_discard:
-            ui.print_message("You have chosen not to discard. Drawing ...")
+            ui.print_message(f"{player.name} has chosen not to discard. Drawing ...")
         else:
             ui.print_message("No matching card. Drawing ...")
         # Return if no card could be picked.
@@ -257,9 +258,22 @@ class Switch:
             return
         # Discard picked card if possible.
         card = player.hand[-1]
-        if self.can_discard(card):
+        # AIs discard drawn card if possible.
+        if self.can_discard(card) and player.is_ai:
             self.discard_card(player, card)
-        # Otherwise inform the player.
+        # Human players are asked whether they want to discard the card if possible.
+        elif self.can_discard(card) and not player.is_ai:
+            ui.print_message(f"\nCard drawn: {card}")
+            ui.print_discard_choice()
+            choice = ui.get_int_input(1, 2)
+            # If the player has chosen to discard the card, discard it.
+            if choice == 1:
+                self.discard_card(player, card)
+            # If the player has chosen to add the card to their hand, append card to hand.
+            elif choice == 2:
+                player.hand.append(card)
+                ui.print_message(f"{card} has been added to hand.")
+        # Inform the player if the card could not have been discarded.
         elif not player.is_ai:
             ui.print_discard_result(False, card)
 

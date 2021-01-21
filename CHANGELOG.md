@@ -1,4 +1,6 @@
 # CHANGELOG 
+* v1.2.3 [2021-01-21]: Implemented an option for SimpleAI to chooce not to discard a card.
+
 * v1.2.2 [2021-01-21]: Implemented an option for the player to choose to add a drawn card to hand
     instead of discarding it after the player couldn't discard a card or chose not to.
 

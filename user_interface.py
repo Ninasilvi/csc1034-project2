@@ -9,7 +9,7 @@ def print_message(msg):
 
 def say_welcome():
     """Print a welcome message."""
-    print_message("Welcome to Switch v1.2.2")
+    print_message("Welcome to Switch v1.2.3")
 
 
 def print_game_menu():

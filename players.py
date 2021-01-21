@@ -42,9 +42,15 @@ class SimpleAI:
     def select_card(self, choices, _):
         """Select a card to be discarded.
 
-        Randomly chooses one of the valid choices.
+        Randomly chooses one of the valid choices
+        including a choice not to discard a card.
         """
-        return random.choice(choices)
+        choices.append("No discard")
+        choice = random.choice(choices)
+        if choice == "No discard":
+            return False
+        else:
+            return choice
 
     def ask_for_swap(self, others):
         """Select a player to swap hands with.
@@ -80,10 +86,10 @@ class SmartAI(SimpleAI):
             }
 
             return offset.get(card.value, in_suit)
-
         sorted_choices = sorted(choices, key=score, reverse=True)
         candidate = sorted_choices[0]
-        return candidate if score(candidate) > -2 else None
+        if score(candidate) > -2:
+            return candidate if score(candidate) > -2 else None
 
     def ask_for_swap(self, others):
         """Select a player to swap hands with.

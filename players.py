@@ -1,6 +1,6 @@
 """Players for the switch game."""
 import random
-import user_interface as UI
+import user_interface as ui
 
 
 class Player:
@@ -15,17 +15,17 @@ class Player:
     def select_card(choices, _):
         """Select a card to be discarded.
 
-        Delegates choice to user interface.
+        Delegates choice to user_interface.
         """
-        return UI.select_card(choices)
+        return ui.select_card(choices)
 
     @staticmethod
     def ask_for_swap(others):
         """Select a player to switch hands with.
 
-        Delegates choice to user interface.
+        Delegates choice to user_interface.
         """
-        return UI.select_player(others)
+        return ui.select_player(others)
 
 
 class SimpleAI:

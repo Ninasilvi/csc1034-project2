@@ -1,7 +1,7 @@
 """Main module of the switch game."""
 import random
 from players import player_classes
-import user_interface as UI
+import user_interface as ui
 
 from cards import generate_deck
 
@@ -38,20 +38,20 @@ class Switch:
 
     def run_game(self):
         """Run rounds of the game until player decides to exit."""
-        UI.say_welcome()
+        ui.say_welcome()
         # Show game menu and run rounds if the input is 1.
         while True:
-            UI.print_game_menu()
-            choice = UI.get_int_input(1, 2)
+            ui.print_game_menu()
+            choice = ui.get_int_input(1, 2)
             if choice == 1:
                 # Set up self.players before the round starts.
-                player_info = UI.get_player_information(MAX_PLAYERS)
+                player_info = ui.get_player_information(MAX_PLAYERS)
                 self.players = [player_classes[typ](name) for typ, name in player_info]
                 self.run_round()
             # If the input is 2, exit the game and print goodbye message.
             else:
                 break
-        UI.say_goodbye()
+        ui.say_goodbye()
 
     def run_round(self):
         """Run a single round of Switch.
@@ -70,7 +70,7 @@ class Switch:
             # Check if the player's hand is empty - if it is, they won and the game ends.
             won = not self.players[i].hand
             if won:
-                UI.print_winner_of_game(self.players[i])
+                ui.print_winner_of_game(self.players[i])
                 break
             # If the player didn't win, the game progresses to the next player based on the game's direction.
             else:
@@ -118,22 +118,22 @@ class Switch:
         # Apply any pending penalties (skip, draw2, draw4).
         if self.skip:
             self.skip = False
-            UI.print_message('{} is skipped.'.format(player.name))
+            ui.print_message('{} is skipped.'.format(player.name))
             return False
 
         if self.draw2:
             picked = self.pick_up_card(player, 2)
             self.draw2 = False
-            UI.print_message('{} draws {} cards.'.format(player.name, picked))
+            ui.print_message('{} draws {} cards.'.format(player.name, picked))
 
         if self.draw4:
             picked = self.pick_up_card(player, 4)
             self.draw4 = False
-            UI.print_message('{} draws {} cards.'.format(player.name, picked))
+            ui.print_message('{} draws {} cards.'.format(player.name, picked))
 
         top_card = self.discards[-1]
         hand_sizes = len([p.hand for p in self.players])
-        UI.print_player_info(player, top_card, hand_sizes)
+        ui.print_player_info(player, top_card, hand_sizes)
 
         # Determine discardable cards.
         discardable = []
@@ -187,13 +187,13 @@ class Switch:
             # If there are no more cards in the stock pile.
             if not self.stock:
                 if len(self.discards) == 1:
-                    UI.print_message("All cards distributed")
+                    ui.print_message("All cards distributed")
                     return i-1
                 # Add back discarded cards excluding the top card.
                 self.stock = self.discards[:-1]
                 del self.discards[:-1]
                 random.shuffle(self.stock)
-                UI.print_message("Discards are shuffled back.")
+                ui.print_message("Discards are shuffled back.")
             # Draw a stock card and append it to player's hand.
             card = self.stock.pop()
             player.hand.append(card)
@@ -212,7 +212,7 @@ class Switch:
         # Remove card from player's hand and add it to discard pile.
         player.hand.remove(card)
         self.discards.append(card)
-        UI.print_discard_result(True, card)
+        ui.print_discard_result(True, card)
         # If the player's hand is empty, the player won.
         if not player.hand:
             return
@@ -228,7 +228,7 @@ class Switch:
         # If card is a K, game direction reverses.
         elif card.value == 'K':
             self.direction *= -1
-            UI.print_message("Game direction reversed.")
+            ui.print_message("Game direction reversed.")
         # If card is a J, ask player with whom to swap hands.
         elif card.value == 'J':
             others = [p for p in self.players if p is not player]
@@ -249,9 +249,9 @@ class Switch:
         """
         # Print out a message depending on whether the player chose not to discard or had no discardable cards.
         if no_discard:
-            UI.print_message("You have chosen not to discard. Drawing ...")
+            ui.print_message("You have chosen not to discard. Drawing ...")
         else:
-            UI.print_message("No matching card. Drawing ...")
+            ui.print_message("No matching card. Drawing ...")
         # Return if no card could be picked.
         if not self.pick_up_card(player):
             return
@@ -261,7 +261,7 @@ class Switch:
             self.discard_card(player, card)
         # Otherwise inform the player.
         elif not player.is_ai:
-            UI.print_discard_result(False, card)
+            ui.print_discard_result(False, card)
 
     def get_normalized_hand_sizes(self, player):
         """Return list of hand sizes in normal form.
@@ -290,7 +290,7 @@ class Switch:
     def swap_hands(player_1, player_2):
         """Exchanges the hands of the two given players."""
         player_1.hand, player_2.hand = player_2.hand, player_1.hand
-        UI.print_message(f"{player_1.name} swaps hands with {player_2.name}.")
+        ui.print_message(f"{player_1.name} swaps hands with {player_2.name}.")
 
 
 if __name__ == '__main__':

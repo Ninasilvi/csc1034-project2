@@ -28,9 +28,9 @@ Some cards have special effects:
 | K     | Same suit or value | The direction of the game changes before the start of next player's turn           |
 | A     | Anytime            | None                                                                               |
 
-If a player is unable to discard any cards, they must draw a card from
-the stock pile. If that card can be discarded, the player must do so
-immediately, otherwise the card goes into the player's hand and the game
+If a player is unable to discard any cards or chooses not to discard, they must 
+draw a card from the stock pile. If that card can be discarded, the player 
+must do so immediately, otherwise the card goes into the player's hand and the game
 proceeds with the next player.
 
 If there are no more cards in the stock pile, all discards except for the 

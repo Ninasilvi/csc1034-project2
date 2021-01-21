@@ -1,4 +1,6 @@
 # CHANGELOG 
+* v1.2.1 [2021-01-21]: Implemented an option for the player not to discard a card voluntarily.
+
 * v1.2.0 [2021-01-16]: Fixed the bug that allows one human player to play against themselves.  
     Now the game is fully functional.
     

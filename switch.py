@@ -14,7 +14,7 @@ HAND_SIZE = 7
 class Switch:
     """The Switch game.
 
-    To run the game, a Switch object is created and its Switch.run_game method is called.
+    To run the game, a Switch object is created and its run_game method is called.
 
     Switch objects have the following attributes, which are initialized
     by the Switch.setup_round method:
@@ -56,7 +56,7 @@ class Switch:
     def run_round(self):
         """Run a single round of Switch.
 
-        Continuously calls Switch.run_player method for the current player,
+        Continuously calls run_player method for the current player,
         and advances the current player depending on the current game direction.
         """
         # Deal cards and set up game round.
@@ -112,8 +112,8 @@ class Switch:
 
         In each turn, game effects are applied according to the outcome of the last turn.
         The player is then asked to select a card via a call to Player.select_card which is then discarded
-        via a call to Switch.discard_card. If the player has no discardable card,
-        Switch.draw_and_discard is called to draw from stock.
+        via a call to discard_card. If the player has no discardable card (or chooses not to discard),
+        draw_and_discard is called to draw from stock.
         """
         # Apply any pending penalties (skip, draw2, draw4).
         if self.skip:
@@ -151,7 +151,11 @@ class Switch:
             self.discard_card(player, card)
             return not player.hand
         # Draw a card and discard if eligible.
-        self.draw_and_discard(player)
+        if discardable:
+            # If the player has chosen not to discard, change the no_discard parameter to True.
+            self.draw_and_discard(player, True)
+        else:
+            self.draw_and_discard(player, False)
         return False
 
     def can_discard(self, card):
@@ -231,17 +235,23 @@ class Switch:
             choice = player.ask_for_swap(others)
             self.swap_hands(player, choice)
 
-    def draw_and_discard(self, player):
+    def draw_and_discard(self, player, no_discard=False):
         """Draw a card from stock and discard it if possible.
 
         Parameters:
         player - Player that draws the card.
+        no_discard - A boolean value that shows whether the player has chosen not to
+            discard a card this turn (default False).
 
-        Calls Switch.pick_up_card to obtain a stock card and adds it to the
+        Calls pick_up_card to obtain a stock card and adds it to the
         player's hand. If the card can be discarded, discard_card method is
         called with the newly picked card.
         """
-        UI.print_message("No matching card. Drawing ...")
+        # Print out a message depending on whether the player chose not to discard or had no discardable cards.
+        if no_discard:
+            UI.print_message("You have chosen not to discard. Drawing ...")
+        else:
+            UI.print_message("No matching card. Drawing ...")
         # Return if no card could be picked.
         if not self.pick_up_card(player):
             return

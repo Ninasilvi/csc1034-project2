@@ -9,7 +9,7 @@ def print_message(msg):
 
 def say_welcome():
     """Print a welcome message."""
-    print_message("Welcome to Switch v1.2.0")
+    print_message("Welcome to Switch v1.2.1")
 
 
 def print_game_menu():
@@ -95,14 +95,14 @@ def get_player_information(max_players):
     print(f"\nHow many ai players [{min_val:d}-{max_val:d}]:")
     no_of_players = get_int_input(min_val, max_val)
 
-    # Starting umber for while loop.
+    # Starting number for while loop.
     num = 0
     # Randomly assign AI players.
     while num < no_of_players:
         # Picks a random AI name and removes it from the name list to avoid repetition.
         name = random.choice(ai_names)
         ai_names.remove(name)
-        # Randomly assigns simple AI or smart AI strategy.
+        # Randomly assign simple AI or smart AI strategy.
         ai_type = random.choice([True, False])
         if ai_type:
             player_info.append(('simple', name))
@@ -114,14 +114,18 @@ def get_player_information(max_players):
 
 
 def select_card(cards):
-    """Select a card from a hand."""
-    print(f"Please select from one of the following cards: [1-{len(cards):d}]")
+    """Select a card from the hand or choose not to discard."""
+    print(f"Please select from one of the following cards: [1-{len(cards):d}]\n"
+          f"If you would like not to discard this turn, select: [{len(cards)+1}]")
     for i in range(len(cards)):
         card = cards[i]
         print(f"{i+1} - {card}")
+    print(f"{len(cards)+1} - No discard")
 
     # Get a card choice and return the card.
-    choice = get_int_input(1, len(cards))
+    choice = get_int_input(1, len(cards)+1)
+    if choice == len(cards)+1:
+        return False
     return cards[choice-1] if choice else None
 
 

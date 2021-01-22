@@ -1,4 +1,6 @@
 # CHANGELOG 
+* v1.3.2 [2021-01-22]: Made it less likely for SimpleAI to voluntarily not discard any cards.
+
 * v1.3.1 [2021-01-22]: Improved print_player_info method in user_interface.py to print 
     some useful information.
 

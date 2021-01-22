@@ -54,6 +54,8 @@ class SimpleAI:
         Randomly chooses one of the valid choices
         including a choice not to discard a card.
         """
+        # Card choices are duplicated to decrease the probability of not discarding any cards.
+        choices = choices * 2
         choices.append("No discard")
         choice = random.choice(choices)
         if choice == "No discard":

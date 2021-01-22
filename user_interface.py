@@ -14,26 +14,26 @@ def say_welcome():
 
 def print_game_menu():
     """Display game menu."""
-    print("\nPlease select from one of the following options: [1-2]")
-    print("1 - New Game")
-    print("2 - Exit")
+    print_message("\nPlease select from one of the following options: [1-2]")
+    print_message("1 - New Game")
+    print_message("2 - Exit")
 
 
 def print_player_info(player, top_card, hands):
     """Display player information and public game state."""
-    print(f"\nHANDS: {hands}")
-    print(f"PLAYER: {player.name}")
+    print_message(f"\nHANDS: {hands}")
+    print_message(f"PLAYER: {player.name}")
     if not player.is_ai:
-        print("HAND: " + ", ".join(str(card) for card in player.hand))
-    print(f"TOP CARD: {top_card}")
+        print_message("HAND: " + ", ".join(str(card) for card in player.hand))
+    print_message(f"TOP CARD: {top_card}")
 
 
 def print_discard_result(discarded, card):
     """Display a discard message."""
     if discarded:
-        print(f"Discarded: {card}\n")
+        print_message(f"Discarded: {card}\n")
     else:
-        print(f"Unable to discard card: {card}")
+        print_message(f"Unable to discard card: {card}\n")
 
 
 def print_winner_of_game(player):
@@ -44,7 +44,7 @@ def print_winner_of_game(player):
 
 
 def say_goodbye():
-    """Say goodbye to my little friend."""
+    """Print a goodbye message."""
     print_message("Goodbye!")
 
 
@@ -65,7 +65,7 @@ def get_int_input(min_val, max_val):
         print("> ", end="")
         choice = convert_to_int(input())
         if choice < min_val or choice > max_val:
-            print(f"Try again: Input should be an integer between [{min_val:d}-{max_val:d}]")
+            print_message(f"Try again: Input should be an integer between [{min_val:d}-{max_val:d}]")
     return choice
 
 
@@ -80,19 +80,19 @@ def get_player_information(max_players):
     # Create a player info list.
     player_info = []
     # Get input of the number of human players.
-    print("\nHow many human players [1-4]:")
+    print_message("\nHow many human players [1-4]:")
     no_of_players = get_int_input(1, max_players)
 
     # Get the names of each human player.
     for i in range(no_of_players):
-        print(f"\nPlease enter the name of player {i+1}:")
+        print_message(f"\nPlease enter the name of player {i+1}:")
         player_info.append(('human', get_string_input()))
 
     ai_names = ["Angela", "Bart", "Charly", "Dorothy", "John", "Paul", "Ringo", "George"]
     # Determine minimum and maximum values of AI players. Ensures there's at least 2 players.
     min_val = 1 if (len(player_info) <= 1) else 0
     max_val = max_players - no_of_players
-    print(f"\nHow many ai players [{min_val:d}-{max_val:d}]:")
+    print_message(f"\nHow many ai players [{min_val:d}-{max_val:d}]:")
     no_of_players = get_int_input(min_val, max_val)
 
     # Starting number for while loop.
@@ -115,12 +115,12 @@ def get_player_information(max_players):
 
 def select_card(cards):
     """Select a card from the hand or choose not to discard."""
-    print(f"Please select from one of the following cards: [1-{len(cards):d}]\n"
-          f"If you would like not to discard this turn, select: [{len(cards)+1}]")
+    print_message(f"Please select from one of the following cards: [1-{len(cards):d}]\n"
+                  f"If you would like not to discard this turn, select: [{len(cards)+1}]")
     for i in range(len(cards)):
         card = cards[i]
-        print(f"{i+1} - {card}")
-    print(f"{len(cards)+1} - No discard")
+        print_message(f"{i+1} - {card}")
+    print_message(f"{len(cards)+1} - No discard")
 
     # Get a card choice and return the card.
     choice = get_int_input(1, len(cards)+1)
@@ -131,10 +131,10 @@ def select_card(cards):
 
 def select_player(players):
     """Select another player."""
-    print(f"Please select from one of the following players: [1-{len(players):d}]")
+    print_message(f"Please select from one of the following players: [1-{len(players):d}]")
     # Print out a list of all other players.
     for idx, player in enumerate(players):
-        print(f"{idx + 1:d} - {player.name} = {len(player.hand):d}")
+        print_message(f"{idx + 1:d} - {player.name} = {len(player.hand):d}")
 
     # Get a player choice and return the player.
     choice = get_int_input(1, len(players))
@@ -144,9 +144,9 @@ def select_player(players):
 def select_discard_choice(card):
     """Display options for the card drawn when nothing was discarded."""
     print_message(f"\nCard drawn: {card}")
-    print("Please select what you would like to do with this card: [1-2]")
-    print("1 - Discard")
-    print("2 - Add to hand")
+    print_message("Please select what you would like to do with this card: [1-2]")
+    print_message("1 - Discard")
+    print_message("2 - Add to hand")
     choice = get_int_input(1, 2)
     if choice == 1:
         return True

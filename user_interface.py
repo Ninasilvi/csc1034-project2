@@ -9,7 +9,7 @@ def print_message(msg):
 
 def say_welcome():
     """Print a welcome message."""
-    print_message("Welcome to Switch v1.2.3")
+    print_message("Welcome to Switch v1.3.0")
 
 
 def print_game_menu():
@@ -17,13 +17,6 @@ def print_game_menu():
     print("\nPlease select from one of the following options: [1-2]")
     print("1 - New Game")
     print("2 - Exit")
-
-
-def print_discard_choice():
-    """Display options for the card drawn when nothing was discarded."""
-    print("Please select what you would like to do with this card: [1-2]")
-    print("1 - Discard")
-    print("2 - Add to hand")
 
 
 def print_player_info(player, top_card, hands):
@@ -146,3 +139,17 @@ def select_player(players):
     # Get a player choice and return the player.
     choice = get_int_input(1, len(players))
     return players[choice - 1]
+
+
+def select_discard_choice(card):
+    """Display options for the card drawn when nothing was discarded."""
+    print_message(f"\nCard drawn: {card}")
+    print("Please select what you would like to do with this card: [1-2]")
+    print("1 - Discard")
+    print("2 - Add to hand")
+    choice = get_int_input(1, 2)
+    if choice == 1:
+        return True
+    elif choice == 2:
+        print_message(f"{card} has been added to hand.")
+        return False

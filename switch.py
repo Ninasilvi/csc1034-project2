@@ -258,24 +258,27 @@ class Switch:
             return
         # Discard picked card if possible.
         card = player.hand[-1]
-        # AIs discard drawn card if possible.
+        # AIs choose whether to discard (if possible) based on strategy and circumstances.
         if self.can_discard(card) and player.is_ai:
-            self.discard_card(player, card)
-        # Human players are asked whether they want to discard the card if possible.
-        elif self.can_discard(card) and not player.is_ai:
-            ui.print_message(f"\nCard drawn: {card}")
-            ui.print_discard_choice()
-            choice = ui.get_int_input(1, 2)
-            # If the player has chosen to discard the card, discard it.
-            if choice == 1:
+            others = [p for p in self.players if p is not player]
+            choice = player.select_card_option(card, others)
+            if choice:
                 self.discard_card(player, card)
-            # If the player has chosen to add the card to their hand, append card to hand.
-            elif choice == 2:
+            else:
                 player.hand.append(card)
-                ui.print_message(f"{card} has been added to hand.")
-        # Inform the player if the card could not have been discarded.
+                ui.print_message(f"{player.name} has chosen to add the card to their hand.")
+        # Human players are asked whether they want to discard the card (if possible).
+        elif self.can_discard(card) and not player.is_ai:
+            choice = player.select_card_option(card)
+            if choice:
+                self.discard_card(player, card)
+            else:
+                player.hand.append(card)
+        # Inform the player if the card could not be discarded.
         elif not player.is_ai:
             ui.print_discard_result(False, card)
+        elif player.is_ai:
+            ui.print_message("Card cannot be discarded.")
 
     def get_normalized_hand_sizes(self, player):
         """Return list of hand sizes in normal form.

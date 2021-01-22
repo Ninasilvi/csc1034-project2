@@ -1,4 +1,7 @@
 # CHANGELOG 
+* v1.3.1 [2021-01-22]: Improved print_player_info method in user_interface.py to print 
+    some useful information.
+
 * v1.3.0 [2021-01-22]: Implemented an option for AIs to choose to add a drawn card to hand 
     instead of discarding it (if no discards were made).
 

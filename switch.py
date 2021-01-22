@@ -132,8 +132,9 @@ class Switch:
             ui.print_message('{} draws {} cards.'.format(player.name, picked))
 
         top_card = self.discards[-1]
-        hand_sizes = len([p.hand for p in self.players])
-        ui.print_player_info(player, top_card, hand_sizes)
+        player_index = self.players.index(player) + 1
+        direction = "Clockwise" if self.direction == 1 else "Anti-clockwise"
+        ui.print_player_info(player, top_card, player_index, direction)
 
         # Determine discardable cards.
         discardable = []

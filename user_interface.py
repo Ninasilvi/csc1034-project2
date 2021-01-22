@@ -9,7 +9,7 @@ def print_message(msg):
 
 def say_welcome():
     """Print a welcome message."""
-    print_message("Welcome to Switch v1.3.0")
+    print_message("Welcome to Switch v1.3.1")
 
 
 def print_game_menu():
@@ -19,9 +19,11 @@ def print_game_menu():
     print_message("2 - Exit")
 
 
-def print_player_info(player, top_card, hands):
+def print_player_info(player, top_card, index, direction):
     """Display player information and public game state."""
-    print_message(f"\nHANDS: {hands}")
+    print_message(f"\nPLAYER: {index}")
+    print_message(f"HAND SIZE: {len(player.hand)}")
+    print_message(f"GAME DIRECTION: {direction}")
     print_message(f"PLAYER: {player.name}")
     if not player.is_ai:
         print_message("HAND: " + ", ".join(str(card) for card in player.hand))
@@ -92,7 +94,7 @@ def get_player_information(max_players):
     # Determine minimum and maximum values of AI players. Ensures there's at least 2 players.
     min_val = 1 if (len(player_info) <= 1) else 0
     max_val = max_players - no_of_players
-    print_message(f"\nHow many ai players [{min_val:d}-{max_val:d}]:")
+    print_message(f"\nHow many AI players [{min_val:d}-{max_val:d}]:")
     no_of_players = get_int_input(min_val, max_val)
 
     # Starting number for while loop.
